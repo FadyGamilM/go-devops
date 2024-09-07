@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  selector:
+    matchLabels:
+      app: server  
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: fadygamil/godevops
+        ports:
+        - containerPort: 3030
+        env:
+          - name: HOST
+            valueFrom:
+              configMapKeyRef:
+                name: server-cm
+                key: HOST
+          - name: SERVER_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: server-cm
+                key: SERVER_PATH
+          - name: MONGO_URI
+            valueFrom:
+              secretKeyRef:
+                name: server-secret
+                key: MONGO_URI

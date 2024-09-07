@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,7 +13,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func (a *api) WithMongo(c context.Context, mongoUri string) error {
@@ -24,7 +24,7 @@ func (a *api) WithMongo(c context.Context, mongoUri string) error {
 		log.Println("error_connecting_to_mongo : ", err)
 	}
 
-	if err := client.Ping(ctx, readpref.Primary()); err != nil {
+	if err := client.Ping(ctx, nil); err != nil {
 		log.Println("error_pinging_mongo_primary_instance : ", err)
 	}
 
@@ -126,7 +126,7 @@ func main() {
 	if mongoUri == "" {
 		log.Fatalln("mongo_uri_env_var_is_empty")
 	}
-	if err := api.WithMongo(api.ctx, mongoUri); err != nil {
+	if err := api.WithMongo(api.ctx, fmt.Sprintf("mongodb://%s", mongoUri)); err != nil {
 		log.Fatalln()
 	}
 

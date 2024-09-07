@@ -15,11 +15,11 @@ spec:
       - name: mongodb
         image: mongo
         ports:
-        - containerPort: 27000
+        - containerPort: 27017
           name: mongodb
         volumeMounts:
         - name: mongodb-pv
-          mountPath: /var/lib/mongodb
+          mountPath: /data/db
 
       volumes:
       - name: mongodb-pv

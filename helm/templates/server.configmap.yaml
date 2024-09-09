@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-cm
+data:
+  HOST: "0.0.0.0:3030"
+  SERVER_PATH: "api/v1/godevops/notes"
